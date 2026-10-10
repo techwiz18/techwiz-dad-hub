@@ -43,10 +43,8 @@ const assetBase = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
           <a href={url('projects/')}>Projects</a>
           <a href={url('community/')}>Community</a>
           <a href="https://github.com/techwiz18" target="_blank" rel="noopener">GitHub</a>
-          {site.forumEnabled ? (
+          {site.forumEnabled && (
             <a href={site.forumUrl} target="_blank" rel="noopener">Forum</a>
-          ) : (
-            <a href="https://github.com/techwiz18/retrobb" target="_blank" rel="noopener" title="Forum coming soon — follow RetroBB">Forum <small style="opacity:.7">(soon)</small></a>
           )}
         </nav>
       </div>
