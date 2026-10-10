@@ -1,0 +1,125 @@
+---
+import Base from '../layouts/Base.astro';
+import RetroGallery from '../components/RetroGallery.astro';
+import OpenCredits from '../components/OpenCredits.astro';
+import site from '../data/site.json';
+import curated from '../data/projects.json';
+import enriched from '../data/enriched.json';
+
+const liveByRepo = new Map((enriched ?? []).map((p) => [p.repo, p.live ?? {}]));
+const projects = curated.map((p) => ({ ...p, live: liveByRepo.get(p.repo) ?? {} }));
+const allTags = [...new Set(projects.flatMap((p) => p.tags ?? []))].sort();
+---
+<Base title="techwiz.dad — project hub">
+  <section class="panel" id="hero">
+    <div class="bar">Board Index</div>
+    <div class="body">
+      <h1 style="margin:0 0 4px">techwiz.dad <span style="font-weight:normal;font-size:13px">· project hub</span></h1>
+      <p style="margin:0 0 8px;color:var(--muted)">Old-school soul, modern code. A central landing page for my GitHub projects — scan in 30 seconds, jump to the right repo.</p>
+      <div class="btnrow">
+        <a class="btn" href="#featured">Browse featured</a>
+        <a class="btn ghost" href="https://github.com/techwiz18" rel="noopener">All repos on GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="featured">
+    <RetroGallery />
+    <OpenCredits />
+  </div>
+
+  <section class="panel" id="all-projects">
+    <div class="bar">All Projects <span style="font-weight:normal" id="count"></span></div>
+    <div class="body">
+      <div class="filterbar" role="search">
+        <input type="search" id="q" placeholder="Search projects…" aria-label="Search projects" />
+        <span id="tagchips" style="display:contents">
+          {allTags.map((t) => <button data-tag={t} aria-pressed="false">{t}</button>)}
+        </span>
+        <label style="font-size:12px"><input type="checkbox" id="hasdemo" /> has demo</label>
+      </div>
+    </div>
+    <div class="body flush" id="grid">
+      {projects.map((p) => (
+        <article class="forum-row" data-repo={p.repo} data-tags={(p.tags ?? []).join(' ')} data-demo={p.demoUrl ? '1' : ''}>
+          <span class="folder" aria-hidden="true"></span>
+          <div>
+            <h3><a href={`https://github.com/${p.repo}`} rel="noopener">{p.repo.split('/')[1]}</a> <span style="font-weight:normal;font-size:11px;color:var(--muted)">{p.status ?? ''}</span></h3>
+            <p>{p.blurb ?? p.live?.ghDescription ?? ''}</p>
+            <div class="badges">
+              {(p.tags ?? []).map((t) => <span class="badge">{t}</span>)}
+              {p.live?.language && <span class="badge">{p.live.language}</span>}
+              {typeof p.live?.stars === 'number' && <span class="badge">★ {p.live.stars}</span>}
+              {p.live?.pushedAt && <span class="badge">updated {new Date(p.live.pushedAt).toLocaleDateString()}</span>}
+              {p.requiresNote && <span class="badge warn">{p.requiresNote}</span>}
+            </div>
+            <div class="btnrow">
+              <a class="btn ghost" href={`https://github.com/${p.repo}`} rel="noopener">Code</a>
+              {p.demoUrl && <a class="btn ghost" href={p.demoUrl} rel="noopener">Demo</a>}
+              {p.docsUrl && <a class="btn ghost" href={p.docsUrl} rel="noopener">Docs</a>}
+            </div>
+          </div>
+          <div class="meta">
+            <div>{p.live?.stars != null ? `★ ${p.live.stars}` : ''}</div>
+            <div>{p.live?.language ?? ''}</div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="panel" id="community">
+    <div class="bar">Community</div>
+    <div class="body">
+      {site.forumEnabled ? (
+        <p>Join the conversation on the live forum: <a href={site.forumUrl} rel="noopener">{site.forumUrl}</a></p>
+      ) : (
+        <>
+          <p style="margin-top:0"><strong>Forum coming soon.</strong> RetroBB will deploy at <code class="inline">{site.forumUrl}</code> (PHP 8.1+ · MySQL) when ready. Until then:</p>
+          <div class="btnrow">
+            <a class="btn" href="https://github.com/techwiz18/retrobb" rel="noopener">Watch RetroBB repo</a>
+            <a class="btn ghost" href="https://github.com/techwiz18/retrobb/issues" rel="noopener">Vote on features</a>
+          </div>
+        </>
+      )}
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      var q = document.getElementById('q');
+      var active = new Set();
+      var hasdemo = document.getElementById('hasdemo');
+      var rows = Array.from(document.querySelectorAll('#grid .forum-row'));
+      var count = document.getElementById('count');
+      var strip = document.getElementById('stat-strip');
+      function apply() {
+        var term = (q.value || '').toLowerCase();
+        var n = 0;
+        rows.forEach(function (r) {
+          var ok = true;
+          if (term && r.textContent.toLowerCase().indexOf(term) < 0) ok = false;
+          active.forEach(function (t) {
+            if ((r.dataset.tags || '').indexOf(t) < 0) ok = false;
+          });
+          if (hasdemo.checked && !r.dataset.demo) ok = false;
+          r.style.display = ok ? '' : 'none';
+          if (ok) n++;
+        });
+        if (count) count.textContent = '· ' + n + ' shown';
+        if (strip) strip.textContent = n + ' projects · retro hub';
+      }
+      document.getElementById('tagchips').addEventListener('click', function (e) {
+        var b = e.target.closest && e.target.closest('[data-tag]');
+        if (!b) return;
+        var t = b.dataset.tag;
+        if (active.has(t)) { active.delete(t); b.setAttribute('aria-pressed', 'false'); }
+        else { active.add(t); b.setAttribute('aria-pressed', 'true'); }
+        apply();
+      });
+      q.addEventListener('input', apply);
+      hasdemo.addEventListener('change', apply);
+      apply();
+    })();
+  </script>
+</Base>

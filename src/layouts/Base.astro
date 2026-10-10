@@ -1,0 +1,114 @@
+---
+import site from '../data/site.json';
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = 'techwiz.dad — project hub', description = 'Old-school soul, modern code. Projects by techwiz.dad.' } = Astro.props;
+const skin = site.defaultSkin ?? 'classic';
+---
+<!doctype html>
+<html lang="en" data-skin={skin} data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <script is:inline>
+      // Restore skin/theme before paint; Auto resolves via matchMedia.
+      try {
+        var s = localStorage.getItem('hub-skin') || document.documentElement.dataset.skin || 'classic';
+        var t = localStorage.getItem('hub-theme') || 'auto';
+        var resolved = t;
+        if (t === 'auto') resolved = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.skin = s;
+        document.documentElement.dataset.theme = resolved;
+        document.documentElement.dataset.themeMode = t;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/"><span class="floppy" aria-hidden="true"></span> techwiz.dad</a>
+        <nav class="mainnav" aria-label="Main">
+          <a href="#featured">Projects</a>
+          <a href="#community">Community</a>
+          <a href="https://github.com/techwiz18" rel="noopener">GitHub</a>
+          {site.forumEnabled ? (
+            <a href={site.forumUrl} rel="noopener">Forum</a>
+          ) : (
+            <a href="https://github.com/techwiz18/retrobb" rel="noopener" title="Forum coming soon — follow RetroBB">Forum <span class="badge">soon</span></a>
+          )}
+        </nav>
+        <div class="switchers" role="group" aria-label="Skin and theme">
+          <span class="grp" id="skin-switch">Skin:
+            <button data-skin-btn="classic">Classic</button><button data-skin-btn="midnight">Midnight</button><button data-skin-btn="silver">Silver</button>
+          </span>
+          <span class="grp" id="theme-switch">Theme:
+            <button data-theme-btn="light">Light</button><button data-theme-btn="dark">Dark</button><button data-theme-btn="auto">Auto</button>
+          </span>
+        </div>
+      </div>
+    </header>
+    <div class="crumbstrip"><div class="wrap"><span>Board Index · Projects · Community</span><span style="margin-left:auto" id="stat-strip"></span></div></div>
+    <main class="wrap"><slot /></main>
+    <footer class="site-footer">
+      <div>Powered by curiosity · <strong>techwiz.dad</strong> · Old-school soul, modern code · 2026</div>
+      <div>Hub is static · Forum will live at {site.forumUrl}</div>
+    </footer>
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        function paint() {
+          var s = localStorage.getItem('hub-skin') || root.dataset.skin || 'classic';
+          var t = localStorage.getItem('hub-theme') || root.dataset.themeMode || 'auto';
+          var r = t === 'auto' ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : t;
+          root.dataset.skin = s; root.dataset.theme = r; root.dataset.themeMode = t;
+          document.querySelectorAll('[data-skin-btn]').forEach(function (b) {
+            b.setAttribute('aria-pressed', b.dataset.skinBtn === s ? 'true' : 'false');
+          });
+          document.querySelectorAll('[data-theme-btn]').forEach(function (b) {
+            b.setAttribute('aria-pressed', b.dataset.themeBtn === t ? 'true' : 'false');
+          });
+          // keep RetroBB gallery in sync when hub skin changes
+          document.querySelectorAll('[data-gallery-skin]').forEach(function (g) {
+            if (g.dataset.galleryLock !== 'true') setGallery(g, s);
+          });
+        }
+        function setGallery(g, skin) {
+          var theme = root.dataset.theme || 'light';
+          var img = g.querySelector('img');
+          if (img) {
+            var png = '/screenshots/retrobb-' + skin + '-' + theme + '.png';
+            var svg = '/screenshots/retrobb-' + skin + '-' + theme + '.svg';
+            img.onerror = function () { img.onerror = null; img.src = svg; };
+            img.src = png;
+            img.alt = 'RetroBB ' + skin + ' skin, ' + theme + ' theme';
+          }
+          g.dataset.gallerySkin = skin;
+          g.querySelectorAll('[data-gskin]').forEach(function (b) {
+            b.setAttribute('aria-pressed', b.dataset.gskin === skin ? 'true' : 'false');
+          });
+        }
+        document.addEventListener('click', function (e) {
+          var sb = e.target.closest && e.target.closest('[data-skin-btn]');
+          var tb = e.target.closest && e.target.closest('[data-theme-btn]');
+          var gb = e.target.closest && e.target.closest('[data-gskin]');
+          if (sb) { try { localStorage.setItem('hub-skin', sb.dataset.skinBtn); } catch (err) {} paint(); }
+          if (tb) { try { localStorage.setItem('hub-theme', tb.dataset.themeBtn); } catch (err) {} paint(); }
+          if (gb) {
+            var g = gb.closest('[data-gallery-skin]');
+            if (g) { g.dataset.galleryLock = 'true'; setGallery(g, gb.dataset.gskin); }
+          }
+        });
+        try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint); } catch (e) {}
+        paint();
+        window.__setGallery = setGallery;
+      })();
+    </script>
+  </body>
+</html>

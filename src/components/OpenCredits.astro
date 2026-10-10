@@ -1,0 +1,28 @@
+---
+/* Docs-only featured card: no demo button by request. */
+---
+<section class="panel" id="open-credits">
+  <div class="bar">★ Featured — OpenCredits <span style="font-weight:normal">· XenForo 2.3+ addon · MIT</span></div>
+  <div class="body">
+    <h2 style="margin:0 0 4px">OpenCredits — open-source credits for XenForo</h2>
+    <p style="margin:0 0 8px;color:var(--muted)">Reward activity, show balances, let members transfer credits, gate trophies on wealth.</p>
+    <div class="badges">
+      <span class="badge">PHP 8.2+</span><span class="badge">XenForo 2.3+</span>
+      <span class="badge">MySQL 8</span><span class="badge warn">Requires XenForo (paid) — docs only, no live demo</span>
+    </div>
+    <table class="specs" style="margin-top:8px">
+      <tr><td>New thread</td><td>$5.00</td><td>Reply</td><td>$1.00</td></tr>
+      <tr><td>Content reacted to</td><td>$2.00</td><td>Daily visit</td><td>$5.00</td></tr>
+      <tr><td>Registration</td><td>$10.00</td><td>Wallet</td><td>postbit · profile · <code class="inline">/credits/</code> · <code class="inline">/credits/transfer</code></td></tr>
+    </table>
+    <div class="btnrow">
+      <a class="btn" href="https://github.com/techwiz18/open-credits" rel="noopener">Code</a>
+      <a class="btn" href="https://github.com/techwiz18/open-credits/blob/main/docs/API.md" rel="noopener">API docs</a>
+      <a class="btn ghost" href="https://github.com/techwiz18/open-credits#readme" rel="noopener">Install</a>
+    </div>
+    <details>
+      <summary style="cursor:pointer;margin-top:8px">Integrate (spend/award from your add-on)</summary>
+<pre>{"// Award or charge via the transaction service (always logged)\n/** @var \\OpenCredits\\Credits\\Service\\Transact $credits */\n$credits = \\XF::app()->service('OpenCredits\\Credits:Transact');\nif ($credits->getBalance($userId, $currencyId) >= $price) {\n    $credits->adjust($userId, $currencyId, -$price, 'my_addon_purchase', $contentId, 'Entry fee');\n}\n// Listen to `oc_credits_adjust` ($userId, $currencyId, $amount, $trigger, $contentId)"}</pre>
+    </details>
+  </div>
+</section>

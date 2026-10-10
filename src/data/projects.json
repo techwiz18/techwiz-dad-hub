@@ -1,0 +1,28 @@
+[
+  {
+    "repo": "techwiz18/retrobb",
+    "featured": true,
+    "status": "beta · v0.3",
+    "blurb": "Old-school forum, reborn — early-2000s soul, modern PHP underneath. You host it, you own it.",
+    "demoUrl": null,
+    "docsUrl": "https://github.com/techwiz18/retrobb#readme",
+    "tags": ["php", "mysql", "forum", "open-source"],
+    "screenshotBase": "/screenshots/retrobb",
+    "install": {
+      "requires": "PHP 8.1+ · MySQL 8+ / MariaDB 10.6+",
+      "cpanel": "Upload release zip to public_html, extract, point domain at public_html/retrobb/public, run web installer.",
+      "local": "git clone https://github.com/techwiz18/retrobb.git && cd retrobb && php bin/migrate.php --seed && php -S localhost:8000 -t public/"
+    }
+  },
+  {
+    "repo": "techwiz18/open-credits",
+    "featured": true,
+    "status": "stable",
+    "blurb": "Free credits economy for XenForo — earn, wallet, transfers, trophies. MIT.",
+    "demoUrl": null,
+    "docsOnly": true,
+    "docsUrl": "https://github.com/techwiz18/open-credits/blob/main/docs/API.md",
+    "requiresNote": "Requires XenForo 2.3+ (paid) · PHP 8.2+ · MySQL 8+",
+    "tags": ["php", "xenforo", "addon", "forum-economy"]
+  }
+]

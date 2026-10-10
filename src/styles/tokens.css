@@ -1,0 +1,97 @@
+/* RetroBB-derived design tokens. Shared with future RetroBB PHP theme.
+   Skins: classic | midnight | silver. Themes: light | dark.
+   Auto is resolved in JS via matchMedia to light/dark. */
+
+/* ---- defaults (classic light) ---- */
+:root,
+:root[data-skin='classic'][data-theme='light'] {
+  --page-bg: #dfe6f0;
+  --panel-bg: #f4f6fa;
+  --panel-border: #5b7fb4;
+  --bar-from: #6f97c8;
+  --bar-to: #3d639b;
+  --bar-text: #ffffff;
+  --header-bg: #1c2b4a;
+  --header-text: #f5e9b8;
+  --link: #1a3f7a;
+  --text: #1e2430;
+  --muted: #5a6577;
+  --folder: #f2c14e;
+  --radius: 3px;
+  --font-ui: Verdana, Tahoma, Geneva, sans-serif;
+}
+
+:root[data-skin='classic'][data-theme='dark'] {
+  --page-bg: #141b2c;
+  --panel-bg: #1b2740;
+  --panel-border: #4a6ea0;
+  --bar-from: #4a6ea0;
+  --bar-to: #2b456e;
+  --bar-text: #ffffff;
+  --header-bg: #101827;
+  --header-text: #f5e9b8;
+  --link: #9dbdea;
+  --text: #dbe3f0;
+  --muted: #93a0b4;
+  --folder: #f2c14e;
+}
+
+:root[data-skin='midnight'][data-theme='light'] {
+  --page-bg: #0e1420;
+  --panel-bg: #ffffff;
+  --panel-border: #3d639b;
+  --bar-from: #5b8bd0;
+  --bar-to: #2f5794;
+  --bar-text: #ffffff;
+  --header-bg: #0a0f1c;
+  --header-text: #f5e9b8;
+  --link: #1a3f7a;
+  --text: #1e2430;
+  --muted: #5a6577;
+  --folder: #f2c14e;
+}
+
+:root[data-skin='midnight'][data-theme='dark'] {
+  --page-bg: #05080f;
+  --panel-bg: #0d1526;
+  --panel-border: #3f6cb3;
+  --bar-from: #3f7ad0;
+  --bar-to: #274b85;
+  --bar-text: #eaf1ff;
+  --header-bg: #05080f;
+  --header-text: #f5e9b8;
+  --link: #8fb6f2;
+  --text: #d6e0f2;
+  --muted: #8b96ab;
+  --folder: #f2c14e;
+}
+
+:root[data-skin='silver'][data-theme='light'] {
+  --page-bg: #e8ecf2;
+  --panel-bg: #f7f8fb;
+  --panel-border: #8b98ad;
+  --bar-from: #b9c3d4;
+  --bar-to: #7e8ba0;
+  --bar-text: #ffffff;
+  --header-bg: #1c2b4a;
+  --header-text: #f5e9b8;
+  --link: #2c4a75;
+  --text: #232a36;
+  --muted: #67727f;
+  --folder: #e8b93e;
+}
+
+:root[data-skin='silver'][data-theme='dark'] {
+  --page-bg: #101216;
+  --panel-bg: #1a1f29;
+  --panel-border: #6e7b91;
+  --bar-from: #8e9cb5;
+  --bar-to: #5b667c;
+  --bar-text: #f2f4f8;
+  --header-bg: #0b0e14;
+  --header-text: #f5e9b8;
+  --link: #a9c3ea;
+  --text: #d3dae6;
+  --muted: #8e99ab;
+  --folder: #e8b93e;
+}
