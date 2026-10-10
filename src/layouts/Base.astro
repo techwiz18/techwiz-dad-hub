@@ -36,7 +36,7 @@ const assetBase = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
   </head>
   <body>
     <header class="site-header">
-      <div class="wrap">
+      <div class="wrap head-main">
         <a class="brand" href={assetBase}><span class="floppy" aria-hidden="true"></span> techwiz.dad</a>
         <nav class="mainnav" aria-label="Main">
           <a href="#featured">Projects</a>
@@ -48,6 +48,8 @@ const assetBase = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
             <a href="https://github.com/techwiz18/retrobb" rel="noopener" title="Forum coming soon — follow RetroBB">Forum <small style="opacity:.7">(soon)</small></a>
           )}
         </nav>
+      </div>
+      <div class="wrap head-util">
         <div class="switchers" role="group" aria-label="Skin and theme">
           <span class="grp" id="skin-switch">Skin:
             <button data-skin-btn="classic">Classic</button><button data-skin-btn="midnight">Midnight</button><button data-skin-btn="silver">Silver</button>

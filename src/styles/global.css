@@ -12,15 +12,16 @@ body {
 a { color: var(--link); }
 .wrap { max-width: 860px; margin: 0 auto; padding: 0 16px; }
 
-/* slim header */
+/* slim two-tier header */
 .site-header { background: var(--header-bg); color: var(--header-text); }
-.site-header .wrap { display: flex; align-items: center; gap: 14px; padding: 8px 16px; flex-wrap: wrap; }
+.site-header .head-main { display: flex; align-items: center; gap: 14px; padding: 10px 16px; flex-wrap: wrap; }
+.site-header .head-util { display: flex; justify-content: flex-end; padding: 0 16px 8px; }
 .brand { display: flex; align-items: center; gap: 8px; color: var(--header-text); text-decoration: none; font-weight: bold; font-size: 16px; }
 .brand .floppy { display: inline-block; width: 15px; height: 15px; background: #7ea4d6; border: 2px solid #dfe9f7; border-top-width: 4px; border-radius: 2px; }
 .mainnav { display: flex; gap: 14px; margin-left: auto; align-items: center; }
 .mainnav a { color: var(--header-text); font-size: 13px; text-decoration: none; }
 .mainnav a:hover { text-decoration: underline; }
-.switchers { display: flex; gap: 12px; align-items: center; font-size: 12px; opacity: 0.9; }
+.switchers { display: flex; gap: 14px; align-items: center; font-size: 12px; opacity: 0.75; }
 .switchers .grp button {
   font: inherit; font-size: 12px; cursor: pointer;
   background: transparent; border: 0; padding: 0; margin-left: 6px;
@@ -41,20 +42,17 @@ h2.sect {
   padding-bottom: 6px; margin: 30px 0 0;
 }
 
-/* featured card: one slim retro bar, otherwise plain */
+/* featured card: plain, one quiet eyebrow line */
 .panel { background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 5px; margin: 14px 0 22px; overflow: hidden; }
-.panel > .bar {
-  background: linear-gradient(to bottom, var(--bar-from), var(--bar-to));
-  color: var(--bar-text); font-size: 13px; padding: 6px 12px;
-}
-.panel > .body { padding: 14px; }
-.panel > .body.flush { padding: 0; }
+.panel > .body { padding: 16px; }
 .panel h2 { margin: 0 0 4px; font-size: 19px; }
 .panel .standfirst { margin: 0 0 10px; color: var(--muted); font-size: 14px; }
+.eyebrow { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.spec { font-size: 13px; margin: 10px 0 0; }
 
 /* gallery */
 .gallery img { width: 100%; height: auto; display: block; border: 1px solid var(--panel-border); border-radius: 4px; }
-.gallery .miniswitch { display: flex; gap: 4px; align-items: center; font-size: 12px; color: var(--muted); padding: 10px 12px 0; }
+.gallery .miniswitch { display: flex; gap: 4px; align-items: center; font-size: 12px; color: var(--muted); padding: 10px 0 0; }
 .gallery .miniswitch button { font: inherit; font-size: 12px; cursor: pointer; border: 0; background: transparent; color: var(--link); padding: 2px 6px; text-decoration: underline; }
 .gallery .miniswitch button[aria-pressed='true'] { font-weight: bold; text-decoration: none; color: var(--text); }
 

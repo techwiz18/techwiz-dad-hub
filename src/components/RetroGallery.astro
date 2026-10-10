@@ -8,36 +8,32 @@ const initialPng = `${assetBase}screenshots/retrobb-classic-light.png`;
 const initialSvg = `${assetBase}screenshots/retrobb-classic-light.svg`;
 ---
 <section class="panel" id="retrobb">
-  <div class="bar">Featured · beta v0.3</div>
-  <div class="body flush">
+  <div class="body">
+    <div class="eyebrow">★ Featured · beta v0.3 · pure PHP + MySQL</div>
+    <h2>RetroBB — the old-school forum, reborn</h2>
+    <p class="standfirst">Early-2000s soul, modern PHP underneath. MIT. You host it, you own it.</p>
     <div class="gallery" data-gallery-skin="classic">
-      <div style="padding:12px 12px 0">
-        <img src={initialPng} onerror={`this.onerror=null;this.src='${initialSvg}'`} alt="RetroBB classic skin, light theme" loading="lazy" width="1020" height="560" />
-      </div>
+      <img src={initialPng} onerror={`this.onerror=null;this.src='${initialSvg}'`} alt="RetroBB classic skin, light theme" loading="lazy" width="1020" height="560" />
       <div class="miniswitch">Skin:
         {gallerySkins.map((s) => <button data-gskin={s} aria-pressed={s === 'classic' ? 'true' : 'false'}>{s[0].toUpperCase() + s.slice(1)}</button>)}
         <span style="margin-left:auto">follows hub theme</span>
       </div>
     </div>
-    <div class="body">
-      <h2>RetroBB — the old-school forum, reborn</h2>
-      <p class="standfirst">Early-2000s soul, modern PHP underneath. MIT. You host it, you own it.</p>
-      <div class="btnrow">
-        <a class="btn solid" href="https://github.com/techwiz18/retrobb" rel="noopener">Code</a>
-        {site.forumEnabled ? (
-          <a class="btn" href={site.forumUrl} rel="noopener">Live forum</a>
-        ) : (
-          <span class="btn" aria-disabled="true" title="Deploy to forum subdomain to enable">Live forum · soon</span>
-        )}
-        <a class="btn" href="https://github.com/techwiz18/retrobb#readme" rel="noopener">Install docs</a>
-      </div>
-      <details>
-        <summary>Install (5 minutes · PHP 8.1+ · MySQL 8+)</summary>
-        <table class="specs">
-          <tr><td><strong>cPanel</strong></td><td>Upload release zip to <code class="inline">public_html</code>, extract, point domain at <code class="inline">public_html/retrobb/public</code>, run web installer.</td></tr>
-          <tr><td><strong>Local</strong></td><td><code class="inline">php bin/migrate.php --seed &amp;&amp; php -S localhost:8000 -t public/</code></td></tr>
-        </table>
-      </details>
+    <div class="btnrow">
+      <a class="btn solid" href="https://github.com/techwiz18/retrobb" rel="noopener">Code</a>
+      {site.forumEnabled ? (
+        <a class="btn" href={site.forumUrl} rel="noopener">Live forum</a>
+      ) : (
+        <span class="btn" aria-disabled="true" title="Deploy to forum subdomain to enable">Live forum · soon</span>
+      )}
+      <a class="btn" href="https://github.com/techwiz18/retrobb#readme" rel="noopener">Install docs</a>
     </div>
+    <details>
+      <summary>Install (5 minutes · PHP 8.1+ · MySQL 8+)</summary>
+      <table class="specs">
+        <tr><td><strong>cPanel</strong></td><td>Upload release zip to <code class="inline">public_html</code>, extract, point domain at <code class="inline">public_html/retrobb/public</code>, run web installer.</td></tr>
+        <tr><td><strong>Local</strong></td><td><code class="inline">php bin/migrate.php --seed &amp;&amp; php -S localhost:8000 -t public/</code></td></tr>
+      </table>
+    </details>
   </div>
 </section>
