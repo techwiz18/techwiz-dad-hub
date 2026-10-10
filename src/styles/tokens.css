@@ -37,11 +37,11 @@
 }
 
 :root[data-skin='midnight'][data-theme='light'] {
-  --page-bg: #0e1420;
+  --page-bg: #d8e0ec;
   --panel-bg: #ffffff;
-  --panel-border: #3d639b;
-  --bar-from: #5b8bd0;
-  --bar-to: #2f5794;
+  --panel-border: #2f4a75;
+  --bar-from: #4a6ea0;
+  --bar-to: #2b456e;
   --bar-text: #ffffff;
   --header-bg: #0a0f1c;
   --header-text: #f5e9b8;
