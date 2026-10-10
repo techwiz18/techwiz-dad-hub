@@ -38,8 +38,8 @@ function detailUrl(repo: string) {
           {typeof p.live?.stars === 'number' && <span>★ {p.live.stars} · </span>}
           {p.live?.language && <span>{p.live.language} · </span>}
           {updated(p) && <span>updated {updated(p)} · </span>}
-          <a href={`https://github.com/${p.repo}`} rel="noopener">Code</a>
-          {p.docsUrl && <a href={p.docsUrl} rel="noopener">Docs</a>}
+          <a href={`https://github.com/${p.repo}`} target="_blank" rel="noopener">Code</a>
+          {p.docsUrl && <a href={p.docsUrl} target="_blank" rel="noopener">Docs</a>}
         </div>
         {p.requiresNote && <p class="note">{p.requiresNote}</p>}
       </article>

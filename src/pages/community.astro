@@ -7,13 +7,13 @@ import { url } from '../lib/base';
   <p class="crumbs"><a href={url('')}>Home</a> · Community</p>
   <h1 class="page-title">Community</h1>
   {site.forumEnabled ? (
-    <p>Join the conversation on the live forum: <a href={site.forumUrl} rel="noopener">{site.forumUrl}</a></p>
+    <p>Join the conversation on the live forum: <a href={site.forumUrl} target="_blank" rel="noopener">{site.forumUrl}</a></p>
   ) : (
     <>
       <p><strong>Forum coming soon.</strong> RetroBB will deploy at <code class="inline">{site.forumUrl}</code> (PHP 8.1+ · MySQL) when ready. Until then:</p>
       <div class="btnrow">
-        <a class="btn solid" href="https://github.com/techwiz18/retrobb" rel="noopener">Watch RetroBB repo</a>
-        <a class="btn" href="https://github.com/techwiz18/retrobb/issues" rel="noopener">Vote on features</a>
+        <a class="btn solid" href="https://github.com/techwiz18/retrobb" target="_blank" rel="noopener">Watch RetroBB repo</a>
+        <a class="btn" href="https://github.com/techwiz18/retrobb/issues" target="_blank" rel="noopener">Vote on features</a>
       </div>
     </>
   )}

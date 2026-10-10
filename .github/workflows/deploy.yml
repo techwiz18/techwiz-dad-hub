@@ -29,9 +29,8 @@ jobs:
       - run: npm run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Pages serves this repo from a subpath; bake it into asset URLs.
-          # Remove this line if the hub ever moves to an apex custom domain.
-          SITE_BASE: /techwiz-dad-hub
+          # Apex custom domain (techwiz.dad) serves from root, so no SITE_BASE.
+          # Only set SITE_BASE=/techwiz-dad-hub if reverting to the github.io subpath.
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

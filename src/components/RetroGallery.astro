@@ -20,13 +20,13 @@ const initialSvg = `${assetBase}screenshots/retrobb-classic-light.svg`;
       </div>
     </div>
     <div class="btnrow">
-      <a class="btn solid" href="https://github.com/techwiz18/retrobb" rel="noopener">Code</a>
+      <a class="btn solid" href="https://github.com/techwiz18/retrobb" target="_blank" rel="noopener">Code</a>
       {site.forumEnabled ? (
-        <a class="btn" href={site.forumUrl} rel="noopener">Live forum</a>
+        <a class="btn" href={site.forumUrl} target="_blank" rel="noopener">Live forum</a>
       ) : (
         <span class="btn" aria-disabled="true" title="Deploy to forum subdomain to enable">Live forum · soon</span>
       )}
-      <a class="btn" href="https://github.com/techwiz18/retrobb#readme" rel="noopener">Install docs</a>
+      <a class="btn" href="https://github.com/techwiz18/retrobb#readme" target="_blank" rel="noopener">Install docs</a>
     </div>
     <details>
       <summary>Install (5 minutes · PHP 8.1+ · MySQL 8+)</summary>
