@@ -45,7 +45,7 @@ const assetBase = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
           {site.forumEnabled ? (
             <a href={site.forumUrl} rel="noopener">Forum</a>
           ) : (
-            <a href="https://github.com/techwiz18/retrobb" rel="noopener" title="Forum coming soon — follow RetroBB">Forum <span class="badge">soon</span></a>
+            <a href="https://github.com/techwiz18/retrobb" rel="noopener" title="Forum coming soon — follow RetroBB">Forum <small style="opacity:.7">(soon)</small></a>
           )}
         </nav>
         <div class="switchers" role="group" aria-label="Skin and theme">
@@ -58,7 +58,6 @@ const assetBase = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
         </div>
       </div>
     </header>
-    <div class="crumbstrip"><div class="wrap"><span>Board Index · Projects · Community</span><span style="margin-left:auto" id="stat-strip"></span></div></div>
     <main class="wrap"><slot /></main>
     <footer class="site-footer">
       <div>Powered by curiosity · <strong>techwiz.dad</strong> · Old-school soul, modern code · 2026</div>
