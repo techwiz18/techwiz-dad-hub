@@ -12,11 +12,16 @@ const initialSvg = `${assetBase}screenshots/retrobb-classic-light.svg`;
     <div class="eyebrow">★ beta v0.3 · pure PHP + MySQL · MIT</div>
     <h2>RetroBB — the old-school forum, reborn</h2>
     <p class="standfirst">Early-2000s soul, modern PHP underneath. MIT. You host it, you own it.</p>
-    <div class="gallery" data-gallery-skin="classic">
-      <img src={initialPng} onerror={`this.onerror=null;this.src='${initialSvg}'`} alt="RetroBB classic skin, light theme" loading="lazy" width="1020" height="560" />
+    <div class="gallery" data-gallery-skin="hub" data-gallery-theme="hub">
+      <img src={initialPng} onerror={`this.onerror=null;this.src='${initialSvg}'`} alt="RetroBB forum screenshot" loading="lazy" width="1020" height="560" />
       <div class="miniswitch">Skin:
-        {gallerySkins.map((s) => <button data-gskin={s} aria-pressed={s === 'classic' ? 'true' : 'false'}>{s[0].toUpperCase() + s.slice(1)}</button>)}
-        <span style="margin-left:auto">follows hub theme</span>
+        {gallerySkins.map((s) => <button data-gskin={s} aria-pressed="false">{s[0].toUpperCase() + s.slice(1)}</button>)}
+        <button data-gskin="hub" aria-pressed="true">Hub</button>
+      </div>
+      <div class="miniswitch">Theme:
+        <button data-gtheme="light" aria-pressed="false">Light</button>
+        <button data-gtheme="dark" aria-pressed="false">Dark</button>
+        <button data-gtheme="hub" aria-pressed="true">Hub</button>
       </div>
     </div>
     <div class="btnrow">

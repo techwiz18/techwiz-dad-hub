@@ -79,13 +79,23 @@ const assetBase = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
           document.querySelectorAll('[data-theme-btn]').forEach(function (b) {
             b.setAttribute('aria-pressed', b.dataset.themeBtn === t ? 'true' : 'false');
           });
-          // keep RetroBB gallery in sync when hub skin changes
-          document.querySelectorAll('[data-gallery-skin]').forEach(function (g) {
-            if (g.dataset.galleryLock !== 'true') setGallery(g, s);
-          });
+          // RetroBB galleries: each dimension (skin/theme) follows the hub
+          // while set to 'hub', freezes when picked explicitly.
+          document.querySelectorAll('[data-gallery-skin]').forEach(updateGalleryImg);
         }
-        function setGallery(g, skin) {
-          var theme = root.dataset.theme || 'light';
+        function resolvedSkin(g) {
+          return g.dataset.gallerySkin && g.dataset.gallerySkin !== 'hub'
+            ? g.dataset.gallerySkin
+            : (root.dataset.skin || 'classic');
+        }
+        function resolvedTheme(g) {
+          return g.dataset.galleryTheme && g.dataset.galleryTheme !== 'hub'
+            ? g.dataset.galleryTheme
+            : (root.dataset.theme || 'light');
+        }
+        function updateGalleryImg(g) {
+          var skin = resolvedSkin(g);
+          var theme = resolvedTheme(g);
           var img = g.querySelector('img');
           if (img) {
             var png = BASE + 'screenshots/retrobb-' + skin + '-' + theme + '.png';
@@ -94,25 +104,31 @@ const assetBase = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
             img.src = png;
             img.alt = 'RetroBB ' + skin + ' skin, ' + theme + ' theme';
           }
-          g.dataset.gallerySkin = skin;
           g.querySelectorAll('[data-gskin]').forEach(function (b) {
-            b.setAttribute('aria-pressed', b.dataset.gskin === skin ? 'true' : 'false');
+            b.setAttribute('aria-pressed', b.dataset.gskin === (g.dataset.gallerySkin || 'hub') ? 'true' : 'false');
+          });
+          g.querySelectorAll('[data-gtheme]').forEach(function (b) {
+            b.setAttribute('aria-pressed', b.dataset.gtheme === (g.dataset.galleryTheme || 'hub') ? 'true' : 'false');
           });
         }
         document.addEventListener('click', function (e) {
           var sb = e.target.closest && e.target.closest('[data-skin-btn]');
           var tb = e.target.closest && e.target.closest('[data-theme-btn]');
-          var gb = e.target.closest && e.target.closest('[data-gskin]');
+          var gs = e.target.closest && e.target.closest('[data-gskin]');
+          var gt = e.target.closest && e.target.closest('[data-gtheme]');
           if (sb) { try { localStorage.setItem('hub-skin', sb.dataset.skinBtn); } catch (err) {} paint(); }
           if (tb) { try { localStorage.setItem('hub-theme', tb.dataset.themeBtn); } catch (err) {} paint(); }
-          if (gb) {
-            var g = gb.closest('[data-gallery-skin]');
-            if (g) { g.dataset.galleryLock = 'true'; setGallery(g, gb.dataset.gskin); }
+          if (gs) {
+            var g = gs.closest('[data-gallery-skin]');
+            if (g) { g.dataset.gallerySkin = gs.dataset.gskin; updateGalleryImg(g); }
+          }
+          if (gt) {
+            var h = gt.closest('[data-gallery-skin]');
+            if (h) { h.dataset.galleryTheme = gt.dataset.gtheme; updateGalleryImg(h); }
           }
         });
         try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint); } catch (e) {}
         paint();
-        window.__setGallery = setGallery;
       })();
     </script>
   </body>
