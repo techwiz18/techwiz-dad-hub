@@ -3,6 +3,9 @@
 // Swap in real PNGs later: /screenshots/retrobb-{skin}-{theme}.png (keep .svg fallback until then).
 import site from '../data/site.json';
 const gallerySkins = ['classic', 'midnight', 'silver'];
+const assetBase = import.meta.env.BASE_URL;
+const initialPng = `${assetBase}screenshots/retrobb-classic-light.png`;
+const initialSvg = `${assetBase}screenshots/retrobb-classic-light.svg`;
 ---
 <section class="panel" id="retrobb">
   <div class="bar">★ Featured — RetroBB <span style="font-weight:normal">· beta · v0.3 · pure PHP</span></div>
@@ -12,7 +15,7 @@ const gallerySkins = ['classic', 'midnight', 'silver'];
         {gallerySkins.map((s) => <button data-gskin={s} aria-pressed={s === 'classic' ? 'true' : 'false'}>{s[0].toUpperCase() + s.slice(1)}</button>)}
         <span style="margin-left:auto;color:var(--muted)">Theme follows hub · Light/Dark</span>
       </div>
-      <img src="/screenshots/retrobb-classic-light.png" onerror="this.onerror=null;this.src='/screenshots/retrobb-classic-light.svg'" alt="RetroBB classic skin, light theme" loading="lazy" width="1020" height="560" />
+      <img src={initialPng} onerror={`this.onerror=null;this.src='${initialSvg}'`} alt="RetroBB classic skin, light theme" loading="lazy" width="1020" height="560" />
     </div>
     <div class="body">
       <h2 style="margin:0 0 4px">RetroBB — the old-school forum, reborn</h2>

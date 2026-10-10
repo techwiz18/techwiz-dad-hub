@@ -9,6 +9,8 @@ interface Props {
 }
 const { title = 'techwiz.dad — project hub', description = 'Old-school soul, modern code. Projects by techwiz.dad.' } = Astro.props;
 const skin = site.defaultSkin ?? 'classic';
+// Asset base (e.g. /techwiz-dad-hub/ on Pages, / on apex). Exposed to client JS.
+const assetBase = import.meta.env.BASE_URL;
 ---
 <!doctype html>
 <html lang="en" data-skin={skin} data-theme="light">
@@ -33,7 +35,7 @@ const skin = site.defaultSkin ?? 'classic';
   <body>
     <header class="site-header">
       <div class="wrap">
-        <a class="brand" href="/"><span class="floppy" aria-hidden="true"></span> techwiz.dad</a>
+        <a class="brand" href={assetBase}><span class="floppy" aria-hidden="true"></span> techwiz.dad</a>
         <nav class="mainnav" aria-label="Main">
           <a href="#featured">Projects</a>
           <a href="#community">Community</a>
@@ -60,8 +62,9 @@ const skin = site.defaultSkin ?? 'classic';
       <div>Powered by curiosity · <strong>techwiz.dad</strong> · Old-school soul, modern code · 2026</div>
       <div>Hub is static · Forum will live at {site.forumUrl}</div>
     </footer>
-    <script is:inline>
+    <script is:inline define:vars={{ assetBase }}>
       (function () {
+        var BASE = assetBase || '/';
         var root = document.documentElement;
         function paint() {
           var s = localStorage.getItem('hub-skin') || root.dataset.skin || 'classic';
@@ -83,8 +86,8 @@ const skin = site.defaultSkin ?? 'classic';
           var theme = root.dataset.theme || 'light';
           var img = g.querySelector('img');
           if (img) {
-            var png = '/screenshots/retrobb-' + skin + '-' + theme + '.png';
-            var svg = '/screenshots/retrobb-' + skin + '-' + theme + '.svg';
+            var png = BASE + 'screenshots/retrobb-' + skin + '-' + theme + '.png';
+            var svg = BASE + 'screenshots/retrobb-' + skin + '-' + theme + '.svg';
             img.onerror = function () { img.onerror = null; img.src = svg; };
             img.src = png;
             img.alt = 'RetroBB ' + skin + ' skin, ' + theme + ' theme';
