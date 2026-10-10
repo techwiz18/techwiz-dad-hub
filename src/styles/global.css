@@ -86,8 +86,27 @@ table.specs td { border-top: 1px solid var(--panel-border); padding: 5px 4px; }
 details { font-size: 13px; margin-top: 10px; }
 summary { cursor: pointer; color: var(--link); }
 .note { font-size: 12px; color: var(--muted); }
+
+/* subpages */
+.crumbs { font-size: 12px; color: var(--muted); margin: 18px 0 0; }
+.page-title { font-size: 26px; margin: 4px 0 6px; }
+
+/* home teaser cards */
+.teaser {
+  display: grid; grid-template-columns: 1fr 250px; gap: 16px; align-items: center;
+  background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 5px;
+  padding: 16px; margin: 14px 0; text-decoration: none; color: var(--text);
+}
+.teaser:hover { border-color: var(--link); }
+.teaser-text { display: flex; flex-direction: column; gap: 4px; }
+.teaser-text strong { font-size: 17px; color: var(--link); }
+.teaser-text .muted { font-size: 13px; color: var(--muted); }
+.teaser-text .more { font-size: 13px; color: var(--link); margin-top: 4px; }
+.teaser img { width: 100%; height: auto; display: block; border: 1px solid var(--panel-border); border-radius: 4px; }
+.strip { font-size: 13px; color: var(--muted); margin: 22px 0 6px; }
 .site-footer { font-size: 12px; color: var(--muted); padding: 26px 16px 34px; text-align: center; }
 @media (max-width: 640px) {
   .mainnav { margin-left: 0; }
   .hero h1 { font-size: 22px; }
+  .teaser { grid-template-columns: 1fr; }
 }

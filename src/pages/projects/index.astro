@@ -1,0 +1,77 @@
+---
+import Base from '../../layouts/Base.astro';
+import curated from '../../data/projects.json';
+import enriched from '../../data/enriched.json';
+import { url } from '../../lib/base';
+
+const liveByRepo = new Map((enriched ?? []).map((p) => [p.repo, p.live ?? {}]));
+const projects = curated.map((p) => ({ ...p, live: liveByRepo.get(p.repo) ?? {} }));
+const allTags = [...new Set(projects.flatMap((p) => p.tags ?? []))].sort();
+
+function updated(p) {
+  try {
+    return p.live?.pushedAt ? new Date(p.live.pushedAt).toLocaleDateString() : null;
+  } catch { return null; }
+}
+
+function detailUrl(repo: string) {
+  const name = repo.split('/')[1];
+  return name === 'retrobb' || name === 'open-credits' ? url(`projects/${name}/`) : `https://github.com/${repo}`;
+}
+---
+<Base title="Projects — techwiz.dad">
+  <p class="crumbs"><a href={url('')}>Home</a> · Projects</p>
+  <h1 class="page-title">Projects</h1>
+
+  <div class="filterbar" role="search">
+    <input type="search" id="q" placeholder="Search projects…" aria-label="Search projects" />
+    <span id="tagchips" style="display:contents">
+      {allTags.map((t) => <button data-tag={t} aria-pressed="false">{t}</button>)}
+    </span>
+  </div>
+  <div id="grid">
+    {projects.map((p) => (
+      <article class="proj" data-repo={p.repo} data-tags={(p.tags ?? []).join(' ')}>
+        <h3><a href={detailUrl(p.repo)} rel={detailUrl(p.repo).startsWith('http') ? 'noopener' : undefined}>{p.repo.split('/')[1]}</a> <span class="status">{p.status ?? ''}</span></h3>
+        <p>{p.blurb ?? p.live?.ghDescription ?? ''}</p>
+        <div class="meta">
+          {typeof p.live?.stars === 'number' && <span>★ {p.live.stars} · </span>}
+          {p.live?.language && <span>{p.live.language} · </span>}
+          {updated(p) && <span>updated {updated(p)} · </span>}
+          <a href={`https://github.com/${p.repo}`} rel="noopener">Code</a>
+          {p.docsUrl && <a href={p.docsUrl} rel="noopener">Docs</a>}
+        </div>
+        {p.requiresNote && <p class="note">{p.requiresNote}</p>}
+      </article>
+    ))}
+  </div>
+
+  <script is:inline>
+    (function () {
+      var q = document.getElementById('q');
+      var active = new Set();
+      var rows = Array.from(document.querySelectorAll('#grid .proj'));
+      function apply() {
+        var term = (q.value || '').toLowerCase();
+        rows.forEach(function (r) {
+          var ok = true;
+          if (term && r.textContent.toLowerCase().indexOf(term) < 0) ok = false;
+          active.forEach(function (t) {
+            if ((r.dataset.tags || '').indexOf(t) < 0) ok = false;
+          });
+          r.style.display = ok ? '' : 'none';
+        });
+      }
+      document.getElementById('tagchips').addEventListener('click', function (e) {
+        var b = e.target.closest && e.target.closest('[data-tag]');
+        if (!b) return;
+        var t = b.dataset.tag;
+        if (active.has(t)) { active.delete(t); b.setAttribute('aria-pressed', 'false'); }
+        else { active.add(t); b.setAttribute('aria-pressed', 'true'); }
+        apply();
+      });
+      q.addEventListener('input', apply);
+      apply();
+    })();
+  </script>
+</Base>

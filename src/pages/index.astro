@@ -1,102 +1,37 @@
 ---
 import Base from '../layouts/Base.astro';
-import RetroGallery from '../components/RetroGallery.astro';
-import OpenCredits from '../components/OpenCredits.astro';
-import site from '../data/site.json';
-import curated from '../data/projects.json';
-import enriched from '../data/enriched.json';
-
-const liveByRepo = new Map((enriched ?? []).map((p) => [p.repo, p.live ?? {}]));
-const projects = curated.map((p) => ({ ...p, live: liveByRepo.get(p.repo) ?? {} }));
-const allTags = [...new Set(projects.flatMap((p) => p.tags ?? []))].sort();
-
-function updated(p) {
-  try {
-    return p.live?.pushedAt ? new Date(p.live.pushedAt).toLocaleDateString() : null;
-  } catch { return null; }
-}
+import { BASE, url } from '../lib/base';
 ---
 <Base title="techwiz.dad — project hub">
   <section class="hero">
     <h1>techwiz.dad</h1>
     <p>Old-school soul, modern code. A central landing page for my GitHub projects — scan in 30 seconds, jump to the right repo.</p>
     <div class="btnrow">
-      <a class="btn solid" href="#featured">Browse featured</a>
+      <a class="btn solid" href={url('projects/')}>Browse projects</a>
       <a class="btn" href="https://github.com/techwiz18" rel="noopener">All repos on GitHub</a>
     </div>
   </section>
 
   <h2 class="sect" id="featured">Featured</h2>
-  <RetroGallery />
-  <OpenCredits />
 
-  <h2 class="sect" id="all-projects">All projects <span id="count" style="font-weight:normal;text-transform:none"></span></h2>
-  <div class="filterbar" role="search">
-    <input type="search" id="q" placeholder="Search projects…" aria-label="Search projects" />
-    <span id="tagchips" style="display:contents">
-      {allTags.map((t) => <button data-tag={t} aria-pressed="false">{t}</button>)}
+  <a class="teaser" href={url('projects/retrobb/')}>
+    <span class="teaser-text">
+      <span class="eyebrow">★ beta v0.3 · pure PHP + MySQL</span>
+      <strong>RetroBB — the old-school forum, reborn</strong>
+      <span class="muted">Early-2000s soul, modern PHP underneath. MIT. You host it, you own it.</span>
+      <span class="more">View showcase →</span>
     </span>
-  </div>
-  <div id="grid">
-    {projects.map((p) => (
-      <article class="proj" data-repo={p.repo} data-tags={(p.tags ?? []).join(' ')}>
-        <h3><a href={`https://github.com/${p.repo}`} rel="noopener">{p.repo.split('/')[1]}</a> <span class="status">{p.status ?? ''}</span></h3>
-        <p>{p.blurb ?? p.live?.ghDescription ?? ''}</p>
-        <div class="meta">
-          {typeof p.live?.stars === 'number' && <span>★ {p.live.stars} · </span>}
-          {p.live?.language && <span>{p.live.language} · </span>}
-          {updated(p) && <span>updated {updated(p)} · </span>}
-          <a href={`https://github.com/${p.repo}`} rel="noopener">Code</a>
-          {p.docsUrl && <a href={p.docsUrl} rel="noopener">Docs</a>}
-        </div>
-        {p.requiresNote && <p class="note">{p.requiresNote}</p>}
-      </article>
-    ))}
-  </div>
+    <img src={`${BASE}screenshots/retrobb-classic-light.png`} alt="RetroBB forum in classic skin" loading="lazy" width="1020" height="560" />
+  </a>
 
-  <h2 class="sect" id="community">Community</h2>
-  {site.forumEnabled ? (
-    <p>Join the conversation on the live forum: <a href={site.forumUrl} rel="noopener">{site.forumUrl}</a></p>
-  ) : (
-    <>
-      <p><strong>Forum coming soon.</strong> RetroBB will deploy at <code class="inline">{site.forumUrl}</code> when ready. Until then:</p>
-      <div class="btnrow">
-        <a class="btn solid" href="https://github.com/techwiz18/retrobb" rel="noopener">Watch RetroBB repo</a>
-        <a class="btn" href="https://github.com/techwiz18/retrobb/issues" rel="noopener">Vote on features</a>
-      </div>
-    </>
-  )}
+  <a class="teaser" href={url('projects/open-credits/')}>
+    <span class="teaser-text">
+      <span class="eyebrow">★ XenForo 2.3+ addon · MIT</span>
+      <strong>OpenCredits — credits for XenForo</strong>
+      <span class="muted">Earn, wallet, transfers, trophies. Docs only — needs a paid XenForo license.</span>
+      <span class="more">View docs →</span>
+    </span>
+  </a>
 
-  <script is:inline>
-    (function () {
-      var q = document.getElementById('q');
-      var active = new Set();
-      var rows = Array.from(document.querySelectorAll('#grid .proj'));
-      var count = document.getElementById('count');
-      function apply() {
-        var term = (q.value || '').toLowerCase();
-        var n = 0;
-        rows.forEach(function (r) {
-          var ok = true;
-          if (term && r.textContent.toLowerCase().indexOf(term) < 0) ok = false;
-          active.forEach(function (t) {
-            if ((r.dataset.tags || '').indexOf(t) < 0) ok = false;
-          });
-          r.style.display = ok ? '' : 'none';
-          if (ok) n++;
-        });
-        if (count) count.textContent = n === rows.length ? '' : '· ' + n + ' shown';
-      }
-      document.getElementById('tagchips').addEventListener('click', function (e) {
-        var b = e.target.closest && e.target.closest('[data-tag]');
-        if (!b) return;
-        var t = b.dataset.tag;
-        if (active.has(t)) { active.delete(t); b.setAttribute('aria-pressed', 'false'); }
-        else { active.add(t); b.setAttribute('aria-pressed', 'true'); }
-        apply();
-      });
-      q.addEventListener('input', apply);
-      apply();
-    })();
-  </script>
+  <p class="strip">Community — our forum launches with RetroBB. <a href={url('community/')}>Learn more →</a></p>
 </Base>

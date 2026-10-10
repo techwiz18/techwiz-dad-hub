@@ -1,5 +1,6 @@
 ---
 import site from '../data/site.json';
+import { url } from '../lib/base';
 import '../styles/tokens.css';
 import '../styles/global.css';
 
@@ -39,8 +40,8 @@ const assetBase = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
       <div class="wrap head-main">
         <a class="brand" href={assetBase}><span class="floppy" aria-hidden="true"></span> techwiz.dad</a>
         <nav class="mainnav" aria-label="Main">
-          <a href="#featured">Projects</a>
-          <a href="#community">Community</a>
+          <a href={url('projects/')}>Projects</a>
+          <a href={url('community/')}>Community</a>
           <a href="https://github.com/techwiz18" rel="noopener">GitHub</a>
           {site.forumEnabled ? (
             <a href={site.forumUrl} rel="noopener">Forum</a>
