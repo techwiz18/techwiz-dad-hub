@@ -3,7 +3,9 @@
 // Swap in real PNGs later: /screenshots/retrobb-{skin}-{theme}.png (keep .svg fallback until then).
 import site from '../data/site.json';
 const gallerySkins = ['classic', 'midnight', 'silver'];
-const assetBase = import.meta.env.BASE_URL;
+// NOTE: BASE_URL has no trailing slash — normalize before joining paths.
+const rawBase = import.meta.env.BASE_URL || '/';
+const assetBase = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 const initialPng = `${assetBase}screenshots/retrobb-classic-light.png`;
 const initialSvg = `${assetBase}screenshots/retrobb-classic-light.svg`;
 ---

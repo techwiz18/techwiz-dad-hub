@@ -10,7 +10,9 @@ interface Props {
 const { title = 'techwiz.dad — project hub', description = 'Old-school soul, modern code. Projects by techwiz.dad.' } = Astro.props;
 const skin = site.defaultSkin ?? 'classic';
 // Asset base (e.g. /techwiz-dad-hub/ on Pages, / on apex). Exposed to client JS.
-const assetBase = import.meta.env.BASE_URL;
+// NOTE: import.meta.env.BASE_URL has NO trailing slash — normalize it.
+const rawBase = import.meta.env.BASE_URL || '/';
+const assetBase = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 ---
 <!doctype html>
 <html lang="en" data-skin={skin} data-theme="light">
