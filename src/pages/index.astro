@@ -2,6 +2,11 @@
 import Base from '../layouts/Base.astro';
 import { BASE, url } from '../lib/base';
 import forum from '../data/forum.json';
+import enriched from '../data/enriched.json';
+
+const liveByRepo = new Map((enriched ?? []).map((p) => [p.repo, p.live ?? {}]));
+const retroTag = liveByRepo.get('techwiz18/retrobb')?.release?.tag ?? 'beta v0.3';
+const ocTag = liveByRepo.get('techwiz18/open-credits')?.release?.tag ?? 'stable';
 
 const topics = forum.topics ?? [];
 const boards = forum.boards ?? [];
@@ -22,7 +27,7 @@ const list = topics.length > 0 ? topics.slice(0, 5).map((t) => ({ ...t, kind: ''
 
   <a class="teaser" href={url('projects/retrobb/')}>
     <span class="teaser-text">
-      <span class="eyebrow">★ beta v0.3 · pure PHP + MySQL</span>
+      <span class="eyebrow">★ {retroTag} · pure PHP + MySQL</span>
       <strong>RetroBB — the old-school forum, reborn</strong>
       <span class="muted">Early-2000s soul, modern PHP underneath. MIT. You host it, you own it.</span>
       <span class="more">View showcase →</span>
@@ -32,7 +37,7 @@ const list = topics.length > 0 ? topics.slice(0, 5).map((t) => ({ ...t, kind: ''
 
   <a class="teaser" href={url('projects/open-credits/')}>
     <span class="teaser-text">
-      <span class="eyebrow">★ XenForo 2.3+ addon · MIT</span>
+      <span class="eyebrow">★ {ocTag} · XenForo 2.3+ addon · MIT</span>
       <strong>OpenCredits — credits for XenForo</strong>
       <span class="muted">Earn, wallet, transfers, trophies. Docs only — needs a paid XenForo license.</span>
       <span class="more">View docs →</span>

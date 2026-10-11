@@ -1,5 +1,8 @@
 ---
 import site from '../data/site.json';
+import enriched from '../data/enriched.json';
+const live = enriched.find((p) => p.repo === 'techwiz18/retrobb')?.live ?? {};
+const version = live.release?.tag ?? 'beta v0.3';
 const gallerySkins = ['classic', 'midnight', 'silver'];
 // NOTE: BASE_URL has no trailing slash — normalize before joining paths.
 const rawBase = import.meta.env.BASE_URL || '/';
@@ -9,7 +12,7 @@ const initialSvg = `${assetBase}screenshots/retrobb-classic-light.svg`;
 ---
 <section class="panel" id="retrobb">
   <div class="body">
-    <div class="eyebrow">★ beta v0.3 · pure PHP + MySQL · MIT</div>
+    <div class="eyebrow">★ {version} · pure PHP + MySQL · MIT</div>
     <h2>RetroBB — the old-school forum, reborn</h2>
     <p class="standfirst">Early-2000s soul, modern PHP underneath. MIT. You host it, you own it.</p>
     <div class="gallery" data-gallery-skin="hub" data-gallery-theme="hub">

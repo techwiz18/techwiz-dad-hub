@@ -1,9 +1,12 @@
 ---
 /* Docs-only featured card: no demo button by request. */
+import enriched from '../data/enriched.json';
+const live = enriched.find((p) => p.repo === 'techwiz18/open-credits')?.live ?? {};
+const version = live.release?.tag ?? 'stable';
 ---
 <section class="panel" id="open-credits">
   <div class="body">
-    <div class="eyebrow">★ XenForo 2.3+ addon · MIT</div>
+    <div class="eyebrow">★ {version} · XenForo 2.3+ addon · MIT</div>
     <h2>OpenCredits — credits for XenForo</h2>
     <p class="standfirst">A free credits economy for XenForo: earn, wallet, transfers, trophies. Docs only — it needs a paid XenForo license, so there's no live demo.</p>
     <p class="spec">Earn — thread $5 · reply $1 · reaction $2 · visit $5/day<br />Wallet — postbit, profile, <code class="inline">/credits/</code>, <code class="inline">/credits/transfer</code></p>

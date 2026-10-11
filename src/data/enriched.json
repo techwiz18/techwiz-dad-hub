@@ -24,10 +24,11 @@
       "openIssues": 0,
       "language": "PHP",
       "topics": [],
-      "pushedAt": "2026-10-10T02:39:32Z",
+      "pushedAt": "2026-10-11T17:28:01Z",
       "defaultBranch": "main",
       "license": "MIT",
-      "ghDescription": "RetroBB by techwiz.dad — old-school forum (early-2000s soul) in pure PHP. MIT."
+      "ghDescription": "RetroBB by techwiz.dad — old-school forum (early-2000s soul) in pure PHP. MIT.",
+      "release": null
     }
   },
   {
@@ -60,7 +61,13 @@
       "pushedAt": "2026-10-10T02:48:03Z",
       "defaultBranch": "main",
       "license": "MIT",
-      "ghDescription": "Free open-source credits system for XenForo 2.3+: earn credits, wallet with history, member transfers, trophy criteria (MIT)"
+      "ghDescription": "Free open-source credits system for XenForo 2.3+: earn credits, wallet with history, member transfers, trophy criteria (MIT)",
+      "release": {
+        "tag": "v0.9.21",
+        "name": "v0.9.21 — Integrator hooks, admin tools, display control",
+        "publishedAt": "2026-10-08T19:05:41Z",
+        "url": "https://github.com/techwiz18/open-credits/releases/tag/v0.9.21"
+      }
     }
   }
 ]
