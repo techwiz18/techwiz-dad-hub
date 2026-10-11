@@ -51,10 +51,10 @@ const list = topics.length > 0 ? topics.slice(0, 5).map((t) => ({ ...t, kind: ''
       <h2 class="sect">From the forum</h2>
       <ul class="forumlist">
         {list.map((item) => (
-          <li><a href={item.url} target="_blank" rel="noopener">{item.title}</a>{item.kind && <span class="status"> · {item.kind}</span>}</li>
+          <li><a href={item.url}>{item.title}</a>{item.kind && <span class="status"> · {item.kind}</span>}</li>
         ))}
       </ul>
-      <p class="note">Live from the board index · refreshed nightly · <a href="https://forum.techwiz.dad" target="_blank" rel="noopener">visit the forum →</a></p>
+      <p class="note">Live from the board index · refreshed nightly · <a href="https://techwiz.dad/forum/">visit the forum →</a></p>
     </>
   )}
 </Base>

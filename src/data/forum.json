@@ -1,56 +1,56 @@
 {
-  "fetchedAt": "2026-10-11T20:01:24.545Z",
+  "fetchedAt": "2026-10-11T20:09:34.457Z",
   "source": "https://forum.techwiz.dad",
   "boards": [
     {
       "title": "News Releases",
-      "url": "https://forum.techwiz.dad/forum/news-releases.f2"
+      "url": "https://techwiz.dad/forum/news-releases.f2"
     },
     {
       "title": "Retrobb Discussion",
-      "url": "https://forum.techwiz.dad/forum/retrobb-discussion.f3"
+      "url": "https://techwiz.dad/forum/retrobb-discussion.f3"
     },
     {
       "title": "Welcome",
-      "url": "https://forum.techwiz.dad/forum/welcome.f4"
+      "url": "https://techwiz.dad/forum/welcome.f4"
     },
     {
       "title": "Chit Chat",
-      "url": "https://forum.techwiz.dad/forum/chit-chat.f5"
+      "url": "https://techwiz.dad/forum/chit-chat.f5"
     },
     {
       "title": "Forum Games",
-      "url": "https://forum.techwiz.dad/forum/forum-games.f6"
+      "url": "https://techwiz.dad/forum/forum-games.f6"
     }
   ],
   "topics": [
     {
       "title": "Glad To Be Here",
-      "url": "https://forum.techwiz.dad/forum/topic/glad-to-be-here.t6"
+      "url": "https://techwiz.dad/forum/topic/glad-to-be-here.t6"
     },
     {
       "title": "Would You Ever Be In A Tv Show",
-      "url": "https://forum.techwiz.dad/forum/topic/would-you-ever-be-in-a-tv-show.t9"
+      "url": "https://techwiz.dad/forum/topic/would-you-ever-be-in-a-tv-show.t9"
     },
     {
       "title": "Boys Names A Z",
-      "url": "https://forum.techwiz.dad/forum/topic/boys-names-a-z.t8"
+      "url": "https://techwiz.dad/forum/topic/boys-names-a-z.t8"
     },
     {
       "title": "What Things Retro Do You Love",
-      "url": "https://forum.techwiz.dad/forum/topic/what-things-retro-do-you-love.t7"
+      "url": "https://techwiz.dad/forum/topic/what-things-retro-do-you-love.t7"
     },
     {
       "title": "Hi I M Testwiz",
-      "url": "https://forum.techwiz.dad/forum/topic/hi-i-m-testwiz.t4"
+      "url": "https://techwiz.dad/forum/topic/hi-i-m-testwiz.t4"
     },
     {
       "title": "Community Forum Launched",
-      "url": "https://forum.techwiz.dad/forum/topic/community-forum-launched.t3"
+      "url": "https://techwiz.dad/forum/topic/community-forum-launched.t3"
     },
     {
       "title": "Welcome To V0 4",
-      "url": "https://forum.techwiz.dad/forum/topic/welcome-to-v0-4.t2"
+      "url": "https://techwiz.dad/forum/topic/welcome-to-v0-4.t2"
     }
   ]
 }
