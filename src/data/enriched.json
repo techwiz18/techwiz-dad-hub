@@ -24,11 +24,17 @@
       "openIssues": 0,
       "language": "PHP",
       "topics": [],
-      "pushedAt": "2026-10-11T17:28:01Z",
+      "pushedAt": "2026-10-11T18:23:12Z",
       "defaultBranch": "main",
       "license": "MIT",
       "ghDescription": "RetroBB by techwiz.dad — old-school forum (early-2000s soul) in pure PHP. MIT.",
-      "release": null
+      "release": {
+        "tag": "v0.4.0-beta.3",
+        "name": "RetroBB v0.4.0-beta.3",
+        "publishedAt": "2026-10-11T18:23:42Z",
+        "url": "https://github.com/techwiz18/retrobb/releases/tag/v0.4.0-beta.3",
+        "prerelease": true
+      }
     }
   },
   {
@@ -66,7 +72,8 @@
         "tag": "v0.9.21",
         "name": "v0.9.21 — Integrator hooks, admin tools, display control",
         "publishedAt": "2026-10-08T19:05:41Z",
-        "url": "https://github.com/techwiz18/open-credits/releases/tag/v0.9.21"
+        "url": "https://github.com/techwiz18/open-credits/releases/tag/v0.9.21",
+        "prerelease": false
       }
     }
   }

@@ -23,7 +23,10 @@ async function gh(full, suffix) {
 
 async function fetchRepo(full) {
   const j = await gh(full, '');
-  const rel = await gh(full, '/releases/latest');
+  // NOTE: /releases/latest skips prereleases — RetroBB ships betas, so read
+  // the list and take the newest non-draft (stable or prerelease).
+  const rels = (await gh(full, '/releases?per_page=5')) ?? [];
+  const rel = rels.find((r) => !r.draft) ?? null;
   return {
     stars: j.stargazers_count ?? 0,
     forks: j.forks_count ?? 0,
@@ -35,7 +38,7 @@ async function fetchRepo(full) {
     license: j.license?.spdx_id ?? null,
     ghDescription: j.description ?? null,
     release: rel
-      ? { tag: rel.tag_name, name: rel.name ?? rel.tag_name, publishedAt: rel.published_at, url: rel.html_url }
+      ? { tag: rel.tag_name, name: rel.name ?? rel.tag_name, publishedAt: rel.published_at, url: rel.html_url, prerelease: !!rel.prerelease }
       : null,
   };
 }
