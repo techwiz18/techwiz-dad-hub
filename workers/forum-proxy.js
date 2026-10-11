@@ -1,50 +1,40 @@
-/* Phase 2 (not deployed): serve the forum from techwiz.dad/forum/* via a
- * Cloudflare Worker reverse proxy in front of the LiteSpeed/PHP origin.
+/* Serves the forum from techwiz.dad/forum/* via a Cloudflare Worker reverse
+ * proxy in front of the LiteSpeed/PHP origin (forum.techwiz.dad).
  *
- * Deploy (needs a Cloudflare API token — ask the hub maintainer):
- *   1. npm i -g wrangler && wrangler login
+ * Contract with RetroBB (base_path=/forum, dual-serves both path forms):
+ *  - Worker strips ONE /forum prefix, forwards remainder + query to the
+ *    origin with Host preserved (fetch URL stays forum.techwiz.dad).
+ *  - RetroBB emits /forum/-prefixed URLs itself and scopes cookie paths, so
+ *    this worker does NO HTML or cookie rewriting — pass-through only, plus
+ *    one defensive Location guard for any missed hardcoded redirect.
+ *
+ * Deploy (needs the Cloudflare account token):
+ *   1. npm i -g wrangler && wrangler login   (or CLOUDFLARE_API_TOKEN env)
  *   2. wrangler deploy workers/forum-proxy.js --name hub-forum-proxy \
  *        --route 'techwiz.dad/forum/*'
+ *   3. Verify: techwiz.dad/forum/ -> 200 board index, login/logout, post,
+ *      skin switch. Then tell RetroBB session to flip board_url and run R10.
  *
- * How it works: strips the /forum prefix before talking to the origin, then
- * rewrites root-absolute URLs back under /forum on the way out (HTML via
- * HTMLRewriter, plus Location and Set-Cookie headers).
- *
- * KNOWN FRAGILITY (why this is phase 2, not phase 1): RetroBB hardcodes
- * root-absolute URLs in templates (see views/layout.php: /assets/*, /login,
- * /skin/*, form actions) and root-absolute redirects (Location: /install.php,
- * redirect('/') in controllers). The rewriter below covers the common cases,
- * but every new absolute URL, JS fetch(), canonical link, and the
- * Referer-based skin/theme switchback needs auditing. The durable fix is
- * RetroBB-native base-path support instead:
- *   - RETROBB_BASE_PATH config (e.g. '/forum')
- *   - Router::currentPath() strips the prefix before dispatch
- *   - a url() helper used by all templates/redirects/cookies (Path=/forum)
- * Until that lands, this worker is a trial balloon, not a foundation.
+ * Local test (no wrangler needed, hits live origin read-only):
+ *   node scripts/worker-test.mjs
  */
 
 const ORIGIN = 'https://forum.techwiz.dad';
 const PREFIX = '/forum';
 
-class PrefixAttribute {
-  constructor(attr) {
-    this.attr = attr;
-  }
-  element(el) {
-    const v = el.getAttribute(this.attr);
-    if (v && v.startsWith('/')) el.setAttribute(this.attr, PREFIX + v);
-  }
+// Pure path mapping, exported for unit tests.
+export function mapPath(pathname) {
+  if (pathname === PREFIX) return '/';
+  if (pathname.startsWith(PREFIX + '/')) return pathname.slice(PREFIX.length);
+  return null; // not ours
 }
 
 export default {
   async fetch(req) {
     const url = new URL(req.url);
-    if (url.pathname !== PREFIX && !url.pathname.startsWith(PREFIX + '/')) {
-      return fetch(req); // not ours — shouldn't happen given the route
-    }
+    const rest = mapPath(url.pathname);
+    if (rest === null) return fetch(req); // shouldn't happen given the route
 
-    // Strip prefix for the origin: /forum/topic/x -> /topic/x
-    const rest = url.pathname === PREFIX ? '/' : url.pathname.slice(PREFIX.length);
     const target = new URL(ORIGIN + rest + url.search);
     const upstream = await fetch(
       new Request(target.toString(), {
@@ -57,27 +47,13 @@ export default {
 
     const headers = new Headers(upstream.headers);
 
-    // Redirects: /login -> /forum/login (leave absolute forum.techwiz.dad URLs; same trip)
+    // Safety net only: origin should already emit /forum/-prefixed URLs.
+    // Any bare root-absolute Location is a missed hardcoded redirect.
     const loc = headers.get('Location');
-    if (loc && loc.startsWith('/')) headers.set('Location', PREFIX + loc);
-
-    // Session cookies are Path=/ — scope them under the proxy prefix.
-    // (Same-domain bonus: hub JS can read non-HttpOnly forum prefs later.)
-    const cookies = headers.getSetCookie?.() ?? [];
-    if (cookies.length) {
-      headers.delete('Set-Cookie');
-      for (const c of cookies) {
-        headers.append('Set-Cookie', c.replace(/;\s*Path=\//i, `; Path=${PREFIX}/`));
-      }
+    if (loc && loc.startsWith('/') && !loc.startsWith(PREFIX + '/') && loc !== PREFIX) {
+      headers.set('Location', PREFIX + loc);
     }
 
-    const type = headers.get('Content-Type') ?? '';
-    if (!type.includes('text/html')) return new Response(upstream.body, { status: upstream.status, headers });
-
-    return new HTMLRewriter()
-      .on('a[href^="/"], link[href^="/"], area[href^="/"]', new PrefixAttribute('href'))
-      .on('img[src^="/"], script[src^="/"], source[src^="/"], video[poster^="/"]', new PrefixAttribute('src'))
-      .on('form[action^="/"]', new PrefixAttribute('action'))
-      .transform(new Response(upstream.body, { status: upstream.status, headers }));
+    return new Response(upstream.body, { status: upstream.status, headers });
   },
 };
