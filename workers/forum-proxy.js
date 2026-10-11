@@ -36,10 +36,15 @@ export default {
     if (rest === null) return fetch(req); // shouldn't happen given the route
 
     const target = new URL(ORIGIN + rest + url.search);
+    // Marker header: origin .htaccess exempts tagged requests from the
+    // forum.techwiz.dad -> techwiz.dad/forum redirect (else proxied requests
+    // would bounce back here and loop). See snippet below.
+    const fwdHeaders = new Headers(req.headers);
+    fwdHeaders.set('X-Hub-Worker', '1');
     const upstream = await fetch(
       new Request(target.toString(), {
         method: req.method,
-        headers: req.headers,
+        headers: fwdHeaders,
         body: req.body,
         redirect: 'manual',
       }),
