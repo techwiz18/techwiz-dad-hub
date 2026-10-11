@@ -32,7 +32,7 @@ function detailUrl(repo: string) {
   <div id="grid">
     {projects.map((p) => (
       <article class="proj" data-repo={p.repo} data-tags={(p.tags ?? []).join(' ')}>
-        <h3><a href={detailUrl(p.repo)} rel={detailUrl(p.repo).startsWith('http') ? 'noopener' : undefined}>{p.repo.split('/')[1]}</a> <span class="status">{p.status ?? ''}</span></h3>
+        <h3><a href={detailUrl(p.repo)} rel={detailUrl(p.repo).startsWith('http') ? 'noopener' : undefined}>{p.repo.split('/')[1]}</a> <span class="status">{[p.live?.release?.tag, p.status].filter(Boolean).join(' · ')}</span></h3>
         <p>{p.blurb ?? p.live?.ghDescription ?? ''}</p>
         <div class="meta">
           {typeof p.live?.stars === 'number' && <span>★ {p.live.stars} · </span>}
