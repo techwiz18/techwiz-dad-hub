@@ -3,7 +3,7 @@
   "tagline": "Old-school soul, modern code.",
   "apexUrl": "https://techwiz.dad",
   "forumUrl": "https://forum.techwiz.dad",
-  "forumEnabled": false,
+  "forumEnabled": true,
   "githubOwner": "techwiz18",
   "defaultSkin": "classic",
   "defaultTheme": "auto"
