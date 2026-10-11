@@ -1,0 +1,36 @@
+{
+  "fetchedAt": "2026-10-11T01:58:06.746Z",
+  "source": "https://forum.techwiz.dad",
+  "boards": [
+    {
+      "title": "News Releases",
+      "url": "https://forum.techwiz.dad/forum/news-releases.f2"
+    },
+    {
+      "title": "Retrobb Discussion",
+      "url": "https://forum.techwiz.dad/forum/retrobb-discussion.f3"
+    },
+    {
+      "title": "Welcome",
+      "url": "https://forum.techwiz.dad/forum/welcome.f4"
+    },
+    {
+      "title": "Chit Chat",
+      "url": "https://forum.techwiz.dad/forum/chit-chat.f5"
+    },
+    {
+      "title": "Forum Games",
+      "url": "https://forum.techwiz.dad/forum/forum-games.f6"
+    }
+  ],
+  "topics": [
+    {
+      "title": "Community Forum Launched",
+      "url": "https://forum.techwiz.dad/topic/community-forum-launched.t3"
+    },
+    {
+      "title": "Welcome To V0 4",
+      "url": "https://forum.techwiz.dad/topic/welcome-to-v0-4.t2"
+    }
+  ]
+}

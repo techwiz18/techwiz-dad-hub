@@ -1,6 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import { BASE, url } from '../lib/base';
+import forum from '../data/forum.json';
+
+const topics = forum.topics ?? [];
+const boards = forum.boards ?? [];
+const showForum = topics.length + boards.length > 0;
+const list = topics.length > 0 ? topics.slice(0, 5).map((t) => ({ ...t, kind: '' })) : boards.slice(0, 5).map((b) => ({ ...b, kind: 'board' }));
 ---
 <Base title="techwiz.dad — project hub">
   <section class="hero">
@@ -34,4 +40,16 @@ import { BASE, url } from '../lib/base';
   </a>
 
   <p class="strip">Community — our forum is live on RetroBB. <a href="https://forum.techwiz.dad" target="_blank" rel="noopener">Join us →</a></p>
+
+  {showForum && (
+    <>
+      <h2 class="sect">From the forum</h2>
+      <ul class="forumlist">
+        {list.map((item) => (
+          <li><a href={item.url} target="_blank" rel="noopener">{item.title}</a>{item.kind && <span class="status"> · {item.kind}</span>}</li>
+        ))}
+      </ul>
+      <p class="note">Live from the board index · refreshed nightly · <a href="https://forum.techwiz.dad" target="_blank" rel="noopener">visit the forum →</a></p>
+    </>
+  )}
 </Base>

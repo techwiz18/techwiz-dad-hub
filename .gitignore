@@ -1,4 +1,6 @@
 node_modules/
 dist/
 .astro/
-src/data/enriched.json
+# NOTE: src/data/enriched.json and src/data/forum.json are generated at build
+# time but intentionally committed, so fresh clones work without network.
+# CI refreshes them nightly.
